@@ -84,6 +84,12 @@ Para mantener orden absoluto entre Breyner y Daniel:
    - **Documentación / Config:** `docs/<tema>` o `chore/<tarea>`.
 4. **Integración:** Al terminar la tarea y pasar el pipeline pre-commit, se crea Pull Request hacia `develop` para revisión de código por el compañero. Solo al cerrar un Sprint se mergea `develop` hacia `main`.
 
+### LEY 7 — Tablero de Control de Tareas Obligatorio (`docs/TASK_BOARD.md`)
+Todo agente (tanto el de Breyner como el de Daniel) **DEBE mantener actualizado el archivo `docs/TASK_BOARD.md`**:
+- Al iniciar una tarea, verificar que esté asignada al desarrollador actual.
+- Al abrir el Pull Request o mergearlo, marcar la casilla correspondiente con `[x]` y registrar el número de PR.
+- Ningún agente puede ejecutar tareas que pertenezcan al otro desarrollador sin autorización explícita.
+
 ---
 
 ## 5. Guía de Onboarding para el Agente (Si Daniel o Breyner inician sesión)
