@@ -45,67 +45,72 @@ gantt
 
 ## 3. Detalle de Tareas por Sprint
 
-### Sprint 1: Cimientos, Base de Datos y Autenticación
-* **Meta:** Repositorio estructurado, backend FastAPI corriendo con PostgreSQL en Supabase, y frontend React con login y navegación base.
+## 3. Detalle de Tareas por Sprint (Distribución Full-Stack Equitativa)
 
-| Tarea | Asignado | Entregable Técnico |
-| :--- | :--- | :--- |
-| **S1-01: Scaffolding Backend** | Dev Backend | Proyecto FastAPI modular con `venv`, `requirements.txt`, `alembic` y conexión a Supabase Postgres. |
-| **S1-02: Scaffolding Frontend** | Dev Frontend | Proyecto React 19 + Vite + TypeScript + Tailwind CSS + componentes base de `shadcn/ui`. |
-| **S1-03: Modelos de DB & Migración** | Dev Backend | Tablas `User`, `Account`, `Category`, `Transaction` y `PendingNotification`. |
-| **S1-04: Módulo de Autenticación** | Dev Backend & Frontend | Endpoints de Register/Login con JWT en FastAPI; pantallas de Auth y guardias de ruta en React. |
-| **S1-05: Layout Principal & Navegación** | Dev Frontend | Sidebar responsivo, Header con perfil de usuario y estado de conexión. |
+> Ambos desarrolladores (**Breyner** y **Daniel**) desarrollan de forma Full-Stack, participando activamente tanto en Frontend como en Backend a lo largo de los sprints.
+
+### Sprint 1: Cimientos, Base de Datos y Autenticación
+* **Meta:** Repositorio estructurado, backend FastAPI dockerizado corriendo con PostgreSQL, y frontend React con login y navegación base.
+
+| Tarea | Área | Responsable | Rama Asignada | Entregable Técnico |
+| :--- | :--- | :--- | :--- | :--- |
+| **S1-01: Backend & Docker Scaffold** | Backend | **Daniel** | `feature/s1-01-backend-scaffold` | FastAPI modular, Dockerfile, docker-compose, Multi-IA y tests. *(Listo ✅)* |
+| **S1-02: Scaffolding Frontend** | Frontend | **Breyner** | `feature/s1-02-frontend-scaffold` | React 19 + Vite + TypeScript + Tailwind CSS + shadcn/ui. |
+| **S1-03: Modelos de DB & Migraciones** | Backend | **Breyner** | `feature/s1-03-db-models` | Tablas `User`, `Account`, `Category`, `Transaction` con `NUMERIC(14,2)` y Alembic. |
+| **S1-04A: Endpoints de Auth JWT** | Backend | **Daniel** | `feature/s1-04-auth-api` | Rutas `/auth/register` y `/auth/login` con hashing y tokens JWT. |
+| **S1-04B: Pantallas de Login & Registro** | Frontend | **Daniel** | `feature/s1-04-auth-ui` | Vistas de Auth en React, validación de formularios y guardias de ruta. |
+| **S1-05: Layout Principal & Navegación** | Frontend | **Breyner** | `feature/s1-05-main-layout` | Sidebar colapsable, Header con perfil y navegación responsiva. |
 
 ---
 
 ### Sprint 2: Core Ledger & Dashboard Visual
-* **Meta:** El usuario puede gestionar sus cuentas, registrar gastos manualmente y ver gráficos en tiempo real.
+* **Meta:** Gestión completa de cuentas (bolsillos), registro manual de gastos y dashboard con métricas.
 
-| Tarea | Asignado | Entregable Técnico |
-| :--- | :--- | :--- |
-| **S2-01: API de Cuentas & Categorías** | Dev Backend | Endpoints para crear/listar cuentas (Efectivo, Nequi, etc.) y categorías con balance dinámico. |
-| **S2-02: API de Transacciones & Filtros** | Dev Backend | CRUD de transacciones con validación de balance y filtros por fecha, cuenta y tipo. |
-| **S2-03: UI de Gestión de Cuentas** | Dev Frontend | Tarjetas visuales con balances de cada cuenta (Nequi morado, Bancolombia amarillo, etc.). |
-| **S2-04: Tabla de Transacciones** | Dev Frontend | Data table interactiva con paginación, búsqueda y badge de categoría. |
-| **S2-05: Dashboard con Métricas** | Dev Frontend | Cards de Ingresos/Gastos/Balance y gráfico de pastel/dona de gastos por categoría (Recharts). |
+| Tarea | Área | Responsable | Rama Asignada | Entregable Técnico |
+| :--- | :--- | :--- | :--- | :--- |
+| **S2-01: API de Cuentas & Categorías** | Backend | **Breyner** | `feature/s2-01-accounts-api` | CRUD de cuentas (Nequi, Efectivo, Bancos) y categorías personalizadas. |
+| **S2-02: API de Transacciones & Filtros** | Backend | **Daniel** | `feature/s2-02-transactions-api` | CRUD de transacciones con afectación de balance y filtros por fecha/tipo. |
+| **S2-03: UI de Gestión de Cuentas** | Frontend | **Breyner** | `feature/s2-03-accounts-ui` | Cards interactivas con balances por bolsillo (colores Nequi, Nu, Bancolombia). |
+| **S2-04: UI Tabla de Transacciones** | Frontend | **Daniel** | `feature/s2-04-transactions-ui` | Data-table con paginación, búsqueda por comercio, filtros y badges. |
+| **S2-05: Dashboard con Métricas** | Frontend | **Breyner** | `feature/s2-05-dashboard-metrics`| Cards de Balance Total/Ingresos/Gastos y gráfico de dona con Recharts. |
 
 ---
 
 ### Sprint 3: Ingesta Móvil (MacroDroid) & Bandeja de Pendientes
-* **Meta:** Captura automática de notificaciones bancarias de Nequi, Bancolombia y Nu con resolución en 30 minutos.
+* **Meta:** Captura automática de notificaciones de Nequi, Bancolombia y Nu con regla de timeout de 30 min.
 
-| Tarea | Asignado | Entregable Técnico |
-| :--- | :--- | :--- |
-| **S3-01: Endpoint de Webhook Móvil** | Dev Backend | `/api/v1/webhooks/mobile-notifications` autenticado con `X-User-Token`. |
-| **S3-02: Gemini Parser Estructurado** | Dev Backend | Integración con Gemini 1.5 Flash para extraer monto, comercio, tipo y descartar falsos positivos/links. |
-| **S3-03: Prevención de Duplicados** | Dev Backend | Generación de hash de idempotencia para no registrar la misma compra dos veces. |
-| **S3-04: Worker de Timeout (30 min)** | Dev Backend | Tarea en segundo plano (FastAPI background o Celery/cron) que pasa transacciones inactivas a *Gastos Generales*. |
-| **S3-05: UI Bandeja de Pendientes (Inbox)**| Dev Frontend | Banner superior en la app que muestra movimientos por confirmar y permite clasificarlos en 1 click. |
-| **S3-06: Pantalla de Configuración Móvil** | Dev Frontend | Vista donde el usuario copia su URL de webhook y Token para pegarlo en MacroDroid. |
+| Tarea | Área | Responsable | Rama Asignada | Entregable Técnico |
+| :--- | :--- | :--- | :--- | :--- |
+| **S3-01: Endpoint de Webhook Móvil** | Backend | **Daniel** | `feature/s3-01-webhook-macrodroid` | `/api/v1/webhooks/mobile-notifications` autenticado con `X-User-Token`. |
+| **S3-02: Gemini Parser Estructurado** | Backend / AI | **Breyner** | `feature/s3-02-gemini-parser` | Extracción estricta Pydantic (monto, comercio, tipo) y descarte de phishing. |
+| **S3-03: Prevención de Duplicados** | Backend | **Daniel** | `feature/s3-03-idempotency-hash` | Hash SHA-256 para evitar duplicar movimientos entre SMS y Push. |
+| **S3-04: Worker de Timeout (30 min)** | Backend | **Daniel** | `feature/s3-04-timeout-worker` | Tarea en background que pasa transacciones inactivas a *Gastos Generales*. |
+| **S3-05: UI Bandeja de Pendientes (Inbox)**| Frontend | **Breyner** | `feature/s3-05-pending-inbox-ui` | Banner superior en la app con confirmación o reclasificación en 1 click. |
+| **S3-06: Pantalla Configuración Móvil** | Frontend | **Daniel** | `feature/s3-06-mobile-setup-ui` | Vista para copiar el Token personal y tutorial visual de MacroDroid. |
 
 ---
 
 ### Sprint 4: Smart Natural Language Input & Copilot de Consultas
-* **Meta:** Registrar gastos con frases libres y hacer preguntas analíticas al asistente sin errores de cálculo.
+* **Meta:** Registrar gastos con texto/voz libre y asistente conversacional para consultas exactas.
 
-| Tarea | Asignado | Entregable Técnico |
-| :--- | :--- | :--- |
-| **S4-01: Endpoint de Parseo de Texto** | Dev Backend | `/api/v1/ai/parse-text` que convierte *"gasté 100k en ir a la u"* en un objeto de transacción listo para guardar. |
-| **S4-02: Floating Quick-Input UI** | Dev Frontend | Barra de entrada rápida estilo "Spotlight" o cajita de chat con soporte de dictado por voz del navegador. |
-| **S4-03: Agent con Tool Calling** | Dev Backend | Agente con acceso a herramientas SQL (`get_monthly_spending`, `get_category_totals`) para responder preguntas exactas. |
-| **S4-04: Chat Drawer / Asistente UI** | Dev Frontend | Panel lateral desplegable tipo Copilot con streaming de respuestas y visualización de datos. |
+| Tarea | Área | Responsable | Rama Asignada | Entregable Técnico |
+| :--- | :--- | :--- | :--- | :--- |
+| **S4-01: Endpoint de Parseo de Texto** | Backend / AI | **Daniel** | `feature/s4-01-ai-text-parse` | Endpoint `/ai/parse-text` que convierte frases libres en transacciones. |
+| **S4-02: Floating Quick-Input UI** | Frontend | **Breyner** | `feature/s4-02-quick-input-ui` | Barra estilo Spotlight con atajo de teclado y dictado por voz Web Speech API. |
+| **S4-03: Agente con Tool Calling** | Backend / AI | **Breyner** | `feature/s4-03-copilot-tools` | Agente IA con funciones SQL deterministas (`get_monthly_spending`, etc.). |
+| **S4-04: Chat Drawer / Asistente UI** | Frontend | **Daniel** | `feature/s4-04-copilot-chat-ui`| Panel lateral desplegable tipo Copilot con streaming y gráficos incrustados. |
 
 ---
 
 ### Sprint 5: Simulador de Metas Financieras, Auditoría & Despliegue
-* **Meta:** Módulo de metas inteligentes (ej. comprar moto) y despliegue a producción gratuito.
+* **Meta:** Simulación de metas (ej. comprar moto), auditoría integral y despliegue a producción gratuito.
 
-| Tarea | Asignado | Entregable Técnico |
-| :--- | :--- | :--- |
-| **S5-01: Motor de Proyección de Metas** | Dev Backend | Algoritmo que calcula tiempo de ahorro según cashflow libre o cuotas de crédito estimadas. |
-| **S5-02: UI de Metas de Ahorro** | Dev Frontend | Barra de progreso de la meta, simulación interactiva con sliders de tiempo y ahorro mensual. |
-| **S5-03: Auditoría Pre-Deploy** | Dev 1 & Dev 2 | Pipeline Zen: revisión de seguridad OWASP, linters, tests unitarios y accesibilidad. |
-| **S5-04: Despliegue Producción** | Dev 1 & Dev 2 | Frontend en Vercel, Backend en Render/Railway y DB en Supabase. |
+| Tarea | Área | Responsable | Rama Asignada | Entregable Técnico |
+| :--- | :--- | :--- | :--- | :--- |
+| **S5-01: Motor de Proyección de Metas** | Backend | **Daniel** | `feature/s5-01-goals-engine` | Algoritmo que calcula tiempo de ahorro según cashflow libre o cuotas de crédito. |
+| **S5-02: UI de Metas de Ahorro** | Frontend | **Breyner** | `feature/s5-02-goals-ui` | Barra de progreso de la meta con sliders interactivos de ahorro mensual y tiempo. |
+| **S5-03: Auditoría Pre-Deploy** | Fullstack | **Breyner & Daniel** | `feature/s5-03-audit-pre-deploy` | Pipeline Zen: OWASP, linter, tests unitarios y accesibilidad WCAG. |
+| **S5-04: Despliegue Producción (\$0)** | DevOps | **Breyner & Daniel** | `feature/s5-04-prod-deploy` | Frontend en Vercel, Backend en Render/Railway y DB en Supabase. |
 
 ---
 
