@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Menu, Plus, Activity, Bell } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Menu, Plus, Activity, Bell, LogOut, Smartphone } from 'lucide-react'
+import { useAuthStore } from '@/stores/authStore'
 
 interface HeaderProps {
   onOpenMobile: () => void
@@ -17,6 +19,7 @@ interface BackendHealth {
 }
 
 export function Header({ onOpenMobile, onQuickExpenseClick }: HeaderProps) {
+  const { user, logout } = useAuthStore()
   const [health, setHealth] = useState<BackendHealth | null>(null)
   const [isConnecting, setIsConnecting] = useState(true)
 
@@ -31,6 +34,19 @@ export function Header({ onOpenMobile, onQuickExpenseClick }: HeaderProps) {
         setIsConnecting(false)
       })
   }, [])
+
+  // Calcular iniciales del usuario
+  const getInitials = () => {
+    if (!user) return 'DF'
+    if (user.full_name) {
+      const parts = user.full_name.trim().split(' ')
+      if (parts.length >= 2) {
+        return `${parts[0][0]}${parts[1][0]}`.toUpperCase()
+      }
+      return parts[0].slice(0, 2).toUpperCase()
+    }
+    return user.email.slice(0, 2).toUpperCase()
+  }
 
   return (
     <header className="h-16 border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -47,7 +63,7 @@ export function Header({ onOpenMobile, onQuickExpenseClick }: HeaderProps) {
         <div className="hidden sm:flex items-center gap-2 text-xs">
           <span className="font-semibold text-slate-200">Espacio de Trabajo:</span>
           <span className="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">
-            Personal (COP)
+            Personal ({user?.default_currency || 'COP'})
           </span>
         </div>
       </div>
@@ -84,21 +100,42 @@ export function Header({ onOpenMobile, onQuickExpenseClick }: HeaderProps) {
           <span className="hidden sm:inline">Nuevo Gasto</span>
         </button>
 
+        {/* MacroDroid Direct Shortcut */}
+        <Link
+          to="/mobile-setup"
+          className="p-2 rounded-xl text-slate-400 hover:text-purple-300 hover:bg-purple-950/30 transition-colors hidden sm:flex items-center justify-center"
+          title="Configuración de MacroDroid"
+        >
+          <Smartphone className="w-4 h-4" />
+        </Link>
+
         {/* Notifications Icon (Mock) */}
         <button className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors relative">
           <Bell className="w-4 h-4" />
           <span className="w-1.5 h-1.5 rounded-full bg-brand-500 absolute top-2 right-2" />
         </button>
 
-        {/* User Pill / Profile */}
+        {/* User Pill / Profile with Logout */}
         <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-500 to-emerald-400 text-slate-950 font-extrabold text-xs flex items-center justify-center shadow-sm">
-            BM
+            {getInitials()}
           </div>
           <div className="hidden lg:block leading-none text-left">
-            <p className="text-xs font-bold text-white">Breyner Manga</p>
-            <p className="text-[10px] text-slate-400 mt-0.5">Admin & Dev</p>
+            <p className="text-xs font-bold text-white max-w-[130px] truncate">
+              {user?.full_name || user?.email?.split('@')[0] || 'Usuario'}
+            </p>
+            <p className="text-[10px] text-slate-400 mt-0.5">
+              {user?.email || 'Conectado'}
+            </p>
           </div>
+          <button
+            onClick={logout}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors ml-1"
+            title="Cerrar sesión"
+            aria-label="Cerrar sesión"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </header>

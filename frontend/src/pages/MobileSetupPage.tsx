@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Copy, Check } from 'lucide-react'
+import { useAuthStore } from '@/stores/authStore'
 
 export function MobileSetupPage() {
+  const { user } = useAuthStore()
   const [copiedToken, setCopiedToken] = useState(false)
   const [copiedUrl, setCopiedUrl] = useState(false)
 
   const webhookUrl = `${window.location.origin}/api/v1/webhooks/mobile-notifications`
-  const sampleToken = 'draftly_usr_8f7a2d4c9b1e3f6a'
+  const personalToken = user?.webhook_token || 'draftly_usr_8f7a2d4c9b1e3f6a'
 
   const copyToClipboard = (text: string, isToken: boolean) => {
     navigator.clipboard.writeText(text)
@@ -63,11 +65,11 @@ export function MobileSetupPage() {
             <input
               type="text"
               readOnly
-              value={sampleToken}
+              value={personalToken}
               className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 font-mono"
             />
             <button
-              onClick={() => copyToClipboard(sampleToken, true)}
+              onClick={() => copyToClipboard(personalToken, true)}
               className="p-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl transition-colors shrink-0"
             >
               {copiedToken ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
