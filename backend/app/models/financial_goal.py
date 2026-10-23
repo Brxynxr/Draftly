@@ -31,15 +31,9 @@ class FinancialGoal(Base):
         nullable=False,  # Ej: "Moto Yamaha MT-03"
     )
     target_amount: Mapped[Decimal] = mapped_column(Numeric(14, 2), nullable=False)
-    current_saved: Mapped[Decimal] = mapped_column(
-        Numeric(14, 2), default=Decimal("0.00"), nullable=False
-    )
-    target_date: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
-    status: Mapped[GoalStatus] = mapped_column(
-        String(20), default=GoalStatus.ACTIVE, nullable=False
-    )
+    current_saved: Mapped[Decimal] = mapped_column(Numeric(14, 2), default=Decimal("0.00"), nullable=False)
+    target_date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    status: Mapped[GoalStatus] = mapped_column(String(20), default=GoalStatus.ACTIVE, nullable=False)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False

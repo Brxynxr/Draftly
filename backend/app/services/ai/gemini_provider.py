@@ -56,8 +56,7 @@ class GeminiProvider(BaseAIProvider):
             model=self.model_name,
             contents=formatted_prompt,
             config=types.GenerateContentConfig(
-                system_instruction=system_prompt
-                or "Eres el asistente financiero de Draftly.",
+                system_instruction=system_prompt or "Eres el asistente financiero de Draftly.",
             ),
         )
         return response.text or ""

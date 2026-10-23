@@ -1,0 +1,17 @@
+[project]
+name = "draftly-backend"
+version = "0.1.0"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = [
+    "B008",  # Allow FastAPI Depends in function argument defaults
+    "E501",  # Line length handled by ruff format
+    "B904",  # Allow raise within except without from
+    "UP042", # Allow str, Enum inheritance for Pydantic/SQLAlchemy compatibility
+]

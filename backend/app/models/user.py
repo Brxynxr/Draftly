@@ -18,14 +18,10 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    email: Mapped[str] = mapped_column(
-        String(255), unique=True, index=True, nullable=False
-    )
+    email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
     full_name: Mapped[str | None] = mapped_column(String(150), nullable=True)
-    default_currency: Mapped[str] = mapped_column(
-        String(3), default="COP", nullable=False
-    )
+    default_currency: Mapped[str] = mapped_column(String(3), default="COP", nullable=False)
     webhook_token: Mapped[str] = mapped_column(
         String(64),
         unique=True,
@@ -45,12 +41,8 @@ class User(Base):
     )
 
     # Relationships
-    accounts: Mapped[list["Account"]] = relationship(
-        "Account", back_populates="user", cascade="all, delete-orphan"
-    )
-    categories: Mapped[list["Category"]] = relationship(
-        "Category", back_populates="user", cascade="all, delete-orphan"
-    )
+    accounts: Mapped[list["Account"]] = relationship("Account", back_populates="user", cascade="all, delete-orphan")
+    categories: Mapped[list["Category"]] = relationship("Category", back_populates="user", cascade="all, delete-orphan")
     transactions: Mapped[list["Transaction"]] = relationship(
         "Transaction", back_populates="user", cascade="all, delete-orphan"
     )
