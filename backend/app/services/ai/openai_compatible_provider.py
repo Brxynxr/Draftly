@@ -34,9 +34,7 @@ class OpenAICompatibleProvider(BaseAIProvider):
                 self.model_name = "llama-3.3-70b-versatile"
         elif provider_name == "ollama":
             self.api_key = api_key or "ollama"  # Ollama no requiere clave
-            self.base_url = (
-                base_url or settings.AI_BASE_URL or "http://localhost:11434/v1"
-            )
+            self.base_url = base_url or settings.AI_BASE_URL or "http://localhost:11434/v1"
             if not self.model_name or "gemini" in self.model_name:
                 self.model_name = "llama3.2"
         else:  # Standard OpenAI
@@ -52,9 +50,7 @@ class OpenAICompatibleProvider(BaseAIProvider):
 
     async def parse_transaction(self, text: str) -> ParsedTransaction:
         if self.provider_name != "ollama" and not self.api_key:
-            raise ValueError(
-                f"API Key no configurada para el proveedor '{self.provider_name}'."
-            )
+            raise ValueError(f"API Key no configurada para el proveedor '{self.provider_name}'.")
 
         system_instruction = (
             f"{SYSTEM_PROMPT_TRANSACTION_PARSER}\n"

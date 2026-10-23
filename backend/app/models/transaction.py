@@ -23,12 +23,8 @@ class TransactionType(str, Enum):
 
 class TransactionStatus(str, Enum):
     CONFIRMED = "CONFIRMED"  # Verificado y categorizado por el usuario
-    PENDING_REVIEW = (
-        "PENDING_REVIEW"  # En bandeja de entrada esperando clasificación (< 30 min)
-    )
-    AUTO_RESOLVED = (
-        "AUTO_RESOLVED"  # Auto-clasificado en Gastos Generales tras timeout de 30 min
-    )
+    PENDING_REVIEW = "PENDING_REVIEW"  # En bandeja de entrada esperando clasificación (< 30 min)
+    AUTO_RESOLVED = "AUTO_RESOLVED"  # Auto-clasificado en Gastos Generales tras timeout de 30 min
 
 
 class TransactionSource(str, Enum):
@@ -59,20 +55,12 @@ class Transaction(Base):
     )
 
     amount: Mapped[Decimal] = mapped_column(Numeric(14, 2), nullable=False)
-    type: Mapped[TransactionType] = mapped_column(
-        String(20), default=TransactionType.EXPENSE, nullable=False
-    )
+    type: Mapped[TransactionType] = mapped_column(String(20), default=TransactionType.EXPENSE, nullable=False)
     description: Mapped[str] = mapped_column(String(255), nullable=False)
     merchant: Mapped[str | None] = mapped_column(String(150), nullable=True)
-    status: Mapped[TransactionStatus] = mapped_column(
-        String(20), default=TransactionStatus.CONFIRMED, nullable=False
-    )
-    source: Mapped[TransactionSource] = mapped_column(
-        String(30), default=TransactionSource.MANUAL, nullable=False
-    )
-    idempotency_hash: Mapped[str | None] = mapped_column(
-        String(64), unique=True, index=True, nullable=True
-    )
+    status: Mapped[TransactionStatus] = mapped_column(String(20), default=TransactionStatus.CONFIRMED, nullable=False)
+    source: Mapped[TransactionSource] = mapped_column(String(30), default=TransactionSource.MANUAL, nullable=False)
+    idempotency_hash: Mapped[str | None] = mapped_column(String(64), unique=True, index=True, nullable=True)
     tags: Mapped[list[str] | None] = mapped_column(JSON, default=list, nullable=True)
 
     transaction_date: Mapped[datetime] = mapped_column(
@@ -90,15 +78,9 @@ class Transaction(Base):
 
     # Relationships
     user: Mapped["User"] = relationship("User", back_populates="transactions")
-    account: Mapped["Account"] = relationship(
-        "Account", foreign_keys=[account_id], back_populates="transactions"
-    )
-    destination_account: Mapped[Optional["Account"]] = relationship(
-        "Account", foreign_keys=[destination_account_id]
-    )
-    category: Mapped[Optional["Category"]] = relationship(
-        "Category", back_populates="transactions"
-    )
+    account: Mapped["Account"] = relationship("Account", foreign_keys=[account_id], back_populates="transactions")
+    destination_account: Mapped[Optional["Account"]] = relationship("Account", foreign_keys=[destination_account_id])
+    category: Mapped[Optional["Category"]] = relationship("Category", back_populates="transactions")
 
     def __init__(self, **kwargs):
         kwargs.setdefault("type", TransactionType.EXPENSE)

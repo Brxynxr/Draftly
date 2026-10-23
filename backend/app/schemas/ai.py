@@ -10,9 +10,7 @@ class FinancialAction(str, Enum):
     TRANSFER_IN = "TRANSFER_IN"  # Dinero recibido / pagos / transferencias entrantes
     ATM_WITHDRAWAL = "ATM_WITHDRAWAL"  # Retiro en cajero o corresponsal
     RECHARGE = "RECHARGE"  # Recargas de cuenta (ej. PSE)
-    NON_TRANSACTIONAL = (
-        "NON_TRANSACTIONAL"  # Publicidad, claves dinámicas, avisos de seguridad
-    )
+    NON_TRANSACTIONAL = "NON_TRANSACTIONAL"  # Publicidad, claves dinámicas, avisos de seguridad
 
 
 class ParsedTransaction(BaseModel):

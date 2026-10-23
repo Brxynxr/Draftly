@@ -29,9 +29,7 @@ class Category(Base):
 
     # Relationships
     user: Mapped[Optional["User"]] = relationship("User", back_populates="categories")
-    transactions: Mapped[list["Transaction"]] = relationship(
-        "Transaction", back_populates="category"
-    )
+    transactions: Mapped[list["Transaction"]] = relationship("Transaction", back_populates="category")
 
     def __init__(self, **kwargs):
         kwargs.setdefault("is_system", False)

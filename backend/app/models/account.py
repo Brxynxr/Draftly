@@ -29,12 +29,8 @@ class Account(Base):
         Uuid, ForeignKey("users.id", ondelete="CASCADE"), index=True, nullable=False
     )
     name: Mapped[str] = mapped_column(String(100), nullable=False)
-    type: Mapped[AccountType] = mapped_column(
-        String(20), default=AccountType.DEBIT, nullable=False
-    )
-    balance: Mapped[Decimal] = mapped_column(
-        Numeric(14, 2), default=Decimal("0.00"), nullable=False
-    )
+    type: Mapped[AccountType] = mapped_column(String(20), default=AccountType.DEBIT, nullable=False)
+    balance: Mapped[Decimal] = mapped_column(Numeric(14, 2), default=Decimal("0.00"), nullable=False)
     currency: Mapped[str] = mapped_column(String(3), default="COP", nullable=False)
     account_tail: Mapped[str | None] = mapped_column(String(4), nullable=True)
     color: Mapped[str | None] = mapped_column(String(20), nullable=True)
