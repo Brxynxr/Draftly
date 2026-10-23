@@ -7,8 +7,8 @@
 
 ## 📊 Resumen General del Proyecto
 
-* **Sprint Actual:** **Sprint 1 (Cimientos y Autenticación)**
-* **Progreso Total:** 4 / 24 Tareas completadas (17%)
+* **Sprint Actual:** **Sprint 1 (Cimientos y Autenticación) — ¡100% Completado! 🎉**
+* **Progreso Total:** 5 / 24 Tareas completadas (21%)
 
 ---
 
@@ -20,10 +20,10 @@
 | [x] | **S1-02: Scaffolding Frontend** | **Breyner** | `feature/s1-02-frontend-scaffold` | Merged | React 19 + Vite + TypeScript + Tailwind CSS |
 | [x] | **S1-03: Modelos de DB & Migraciones** | **Breyner** | `feature/s1-03-db-models` | [#1](https://github.com/Brxynxr/Draftly/pull/1) | Tablas Core Ledger con `NUMERIC(14,2)` y Alembic |
 | [x] | **S1-04A: Endpoints Auth JWT** | **Daniel** | `feature/s1-04-auth-api` | [#2](https://github.com/Brxynxr/Draftly/pull/2) | Registro, Login, hashing y token para MacroDroid |
-| [ ] | **S1-04B: UI Login & Registro** | **Daniel** | `feature/s1-04-auth-ui` | - | Vistas de Auth en React, Zustand y guardias |
+| [x] | **S1-04B: UI Login & Registro** | **Daniel** | `feature/s1-04-auth-ui` | [#5](https://github.com/Brxynxr/Draftly/pull/5) | Vistas de Auth en React, Zustand y guardias |
 | [x] | **S1-05: Layout Principal & Navegación** | **Breyner** | `feature/s1-05-main-layout` | [#4](https://github.com/Brxynxr/Draftly/pull/4) | Sidebar colapsable, Header con perfil y shell |
 
-> **Nota para Breyner:** Al terminar **S1-05**, habrás completado el **100% de tus tareas del Sprint 1**.
+> **Hito:** Con la finalización de **S1-04B** y **S1-05**, el **Sprint 1 ha sido completado al 100%**. Ambos desarrolladores (Breyner & Daniel) tienen listos sus entregables base para dar inicio al **Sprint 2 (Core Ledger & Dashboard)**.
 
 ---
 
